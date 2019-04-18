@@ -1,49 +1,49 @@
 library(RSelenium)
 library(rvest)
-remDr<-remoteDriver(remoteServerAddr="localhost", port=4445L, browserName="chrome") #port´Â cmd¿¡ ÀÔ·Â Çß´ø °ÍÀ¸·Î
-remDr$open() # Å©·Ò Ã¢ ¿­±â
-remDr$navigate("https://nid.naver.com/nidlogin.login?mode=form&url=https%3A%2F%2Fwww.naver.com") # ·Î±×ÀÎ ÇÒ ÆäÀÌÁö·Î ÀÌµ¿
+remDr<-remoteDriver(remoteServerAddr="localhost", port=4445L, browserName="chrome") #portëŠ” cmdì— ìž…ë ¥ í–ˆë˜ ê²ƒìœ¼ë¡œ
+remDr$open() # í¬ë¡¬ ì°½ ì—´ê¸°
+remDr$navigate("https://nid.naver.com/nidlogin.login?mode=form&url=https%3A%2F%2Fwww.naver.com") # ë¡œê·¸ì¸ í•  íŽ˜ì´ì§€ë¡œ ì´ë™
 
-txt_id<-remDr$findElement(using="id",value="id") # ÆäÀÌÁö ¼Ò½º¿¡¼­ idÀÌ°í °ªÀÌ idÀÎ °ÍÀ» Ã£¾Æ txt_id¤©
-txt_pw<-remDr$findElement(using="id",value="pw") # À§¿Í °°ÀÌ idÀÌ°í °ªÀÌ pw
-login_btn<-remDr$findElement(using="class",value="btn_global") # ·Î±×ÀÎ ¹öÆ°ÀÇ Å¬·¡½º°¡ btn_global
+txt_id<-remDr$findElement(using="id",value="id") # íŽ˜ì´ì§€ ì†ŒìŠ¤ì—ì„œ idì´ê³  ê°’ì´ idì¸ ê²ƒì„ ì°¾ì•„ txt_idë¡œ 
+txt_pw<-remDr$findElement(using="id",value="pw") # ìœ„ì™€ ê°™ì´ idì´ê³  ê°’ì´ pw
+login_btn<-remDr$findElement(using="class",value="btn_global") # ë¡œê·¸ì¸ ë²„íŠ¼ì˜ í´ëž˜ìŠ¤ê°€ btn_global
 
-txt_id$setElementAttribute("value","shlee9692") # ¡Ü¡Ü¡Ü¡Ü¡Ü¿¡ ¾ÆÀÌµð ÀÔ·Â
-txt_pw$setElementAttribute("value","winner190416!$") # ¡Ü¡Ü¡Ü¡Ü¡Ü¿¡ ºñ¹Ð¹øÈ£ ÀÔ·Â
-login_btn$clickElement() # ·Î±×ÀÎ ¹öÆ° Å¬¸¯
+txt_id$setElementAttribute("value","shlee9692") # â—â—â—â—â—ì— ì•„ì´ë”” ìž…ë ¥
+txt_pw$setElementAttribute("value","winner190416!$") # â—â—â—â—â—ì— ë¹„ë°€ë²ˆí˜¸ ìž…ë ¥
+login_btn$clickElement() # ë¡œê·¸ì¸ ë²„íŠ¼ í´ë¦­
 
-#Áß°í³ª¶ó¿¡¼­ ¸íÇ°[°¡¹æ]ÀÇ urlÁÖ¼Ò
+#ì¤‘ê³ ë‚˜ë¼ì—ì„œ ëª…í’ˆ[ê°€ë°©]ì˜ urlì£¼ì†Œ
 url="https://m.cafe.naver.com/ArticleList.nhn?search.clubid=10050146&search.menuid=782&search.boardtype=L" 
 
-#°¡Á®¿Ã Ç×¸ñÀ» ÀúÀåÇÒ º¤ÅÍ »ý¼º
+#ê°€ì ¸ì˜¬ í•­ëª©ì„ ì €ìž¥í•  ë²¡í„° ìƒì„±
 title=c()
 price=c()
 date=c()
 icon=c()
 
 
-remDr$navigate(url) #À§ url·Î ÀÌµ¿
-href=c() #°¢ °Ô½Ã±ÛÀ» Å¬¸¯ÇßÀ» ¶§ ÀÌµ¿ÇÏ´Â ¸µÅ©¸¦ ÀúÀåÇÒ º¤ÅÍ »ý¼º
+remDr$navigate(url) #ìœ„ urlë¡œ ì´ë™
+href=c() #ê° ê²Œì‹œê¸€ì„ í´ë¦­í–ˆì„ ë•Œ ì´ë™í•˜ëŠ” ë§í¬ë¥¼ ì €ìž¥í•  ë²¡í„° ìƒì„±
 board=remDr$findElements('class', 'board_box ')
 
-#ÇÑ È­¸é¿¡ º¸ÀÌ´Â °Ô½ÃÆÇ ¸ñ·Ï ¼ö ¸¸Å­ ¹Ýº¹
+#í•œ í™”ë©´ì— ë³´ì´ëŠ” ê²Œì‹œíŒ ëª©ë¡ ìˆ˜ ë§Œí¼ ë°˜ë³µ
 for(i in 1:length(board)){
   box=board[[i]]$findChildElement('tag name', 'a')
   tit=box$findChildElement('class','tit')
-  title=c(title,as.character(tit$getElementText())) #Á¦¸ñÀ» º¤ÅÍ¿¡ ÀúÀå
-  href=c(href,as.character(box$getElementAttribute('href'))) #°Ô½Ã±Û·Î °¡´Â url ÁÖ¼Ò º¤ÅÍ¿¡ ÀúÀå
+  title=c(title,as.character(tit$getElementText())) #ì œëª©ì„ ë²¡í„°ì— ì €ìž¥
+  href=c(href,as.character(box$getElementAttribute('href'))) #ê²Œì‹œê¸€ë¡œ ê°€ëŠ” url ì£¼ì†Œ ë²¡í„°ì— ì €ìž¥
 }
 
-#À§¿¡¼­ ÀúÀåÇß´ø ÇÏÀÌÆÛ¸µÅ©ÀÇ °³¼ö¸¸Å­ ¹Ýº¹
+#ìœ„ì—ì„œ ì €ìž¥í–ˆë˜ í•˜ì´í¼ë§í¬ì˜ ê°œìˆ˜ë§Œí¼ ë°˜ë³µ
 for(j in 1:length(href)){
-  remDr$navigate(href[j]) #º¤ÅÍ¿¡ ÀúÀåµÈ url¿¡ Â÷·Ê·Î Á¢¼Ó
-  pr=remDr$findElement('class', 'price') #°¡°ÝÀ» ³ªÅ¸³»´Â ºÎºÐÀ» Ã£À½
-  price=c(price, as.character(pr$getElementText())) #Ã£Àº °¡°ÝÀ» ÇÏ³ª¾¿ º¤ÅÍ¿¡ Ãß°¡ÇÏ¿© ÀúÀå, ¹Ø¿¡µµ µ¿ÀÏÇÑ ¹æ¹ýÀ¸·Î
+  remDr$navigate(href[j]) #ë²¡í„°ì— ì €ìž¥ëœ urlì— ì°¨ë¡€ë¡œ ì ‘ì†
+  pr=remDr$findElement('class', 'price') #ê°€ê²©ì„ ë‚˜íƒ€ë‚´ëŠ” ë¶€ë¶„ì„ ì°¾ìŒ
+  price=c(price, as.character(pr$getElementText())) #ì°¾ì€ ê°€ê²©ì„ í•˜ë‚˜ì”© ë²¡í„°ì— ì¶”ê°€í•˜ì—¬ ì €ìž¥, ë°‘ì—ë„ ë™ì¼í•œ ë°©ë²•ìœ¼ë¡œ
   dd=remDr$findElement('class', 'board_time')
   date=c(date, as.character(dd$getElementText()))
   ic=remDr$findElement('class', 'tran_type')
   icon=c(icon, as.character(ic$getElementText()))
 }
 
-#¸¸µé¾ú´ø ³×°¡Áö º¤ÅÍ¸¦ ÇÕÃÄ µ¥ÀÌÅÍÇÁ·¹ÀÓÀ¸·Î »ý¼º
+#ë§Œë“¤ì—ˆë˜ ë„¤ê°€ì§€ ë²¡í„°ë¥¼ í•©ì³ ë°ì´í„°í”„ë ˆìž„ìœ¼ë¡œ ìƒì„±
 tot_data=as.data.frame(cbind(icon, title, price, date))
