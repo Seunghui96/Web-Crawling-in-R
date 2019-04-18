@@ -1,6 +1,6 @@
 빅데이터분석
 # Web-Crawling-in-R
-https://m.cafe.naver.com/joonggonara
+
 https://m.cafe.naver.com/ArticleList.nhn?search.clubid=10050146&search.menuid=782&search.boardtype=L
 
 < 이 데이터가 유용한 이유 >
