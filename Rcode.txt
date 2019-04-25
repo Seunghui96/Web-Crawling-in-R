@@ -8,8 +8,8 @@ txt_id<-remDr$findElement(using="id",value="id") # 페이지 소스에서 id이�
 txt_pw<-remDr$findElement(using="id",value="pw") # 위와 같이 id이고 값이 pw
 login_btn<-remDr$findElement(using="class",value="btn_global") # 로그인 버튼의 클래스가 btn_global
 
-txt_id$setElementAttribute("value","shlee9692") # ●●●●●에 아이디 입력
-txt_pw$setElementAttribute("value","winner190416!$") # ●●●●●에 비밀번호 입력
+txt_id$setElementAttribute("value","●●●●●") # ●●●●●에 아이디 입력
+txt_pw$setElementAttribute("value","●●●●●") # ●●●●●에 비밀번호 입력
 login_btn$clickElement() # 로그인 버튼 클릭
 
 #중고나라에서 명품[가방]의 url주소
